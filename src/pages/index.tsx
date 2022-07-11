@@ -1,178 +1,351 @@
-import * as React from "react"
+import * as React from "react";
+import { Col, Container, Row, ThemeProvider, Stack, Table, Card, CardGroup, Carousel } from "react-bootstrap";
+import Header from "../parts/header";
+import tex from "../images/dark_wood_texture.jpg"
+import work1 from "../images/swapping_positive_moment.png"
+import { FaUser } from "@react-icons/all-files/fa/FaUser"
+import { CgListTree } from "@react-icons/all-files/cg/CgListTree"
+import { AiOutlineDesktop } from "@react-icons/all-files/ai/AiOutlineDesktop"
+import { BsPencilSquare } from "@react-icons/all-files/bs/BsPencilSquare"
+import { BsNewspaper } from "@react-icons/all-files/bs/BsNewspaper"
+import CardHeader from "react-bootstrap/esm/CardHeader";
 
 // styles
-const pageStyles = {
+const pageStyles: React.CSSProperties = {
   color: "#232129",
-  padding: 96,
+  padding: "0%",
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
+
+const changeFont: React.CSSProperties = {
+  fontFamily: "Impact, Trebuchet MS, sans-serif"
 }
 
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
+const center: React.CSSProperties = {
+  textAlign: "center"
 }
 
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  marginBottom: 24,
+const paddingPosition: React.CSSProperties = {
+  padding: "0% 10% 50px"
 }
 
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
+const paddingNarrowPosition: React.CSSProperties = {
+  padding: "0% 20% 50px"
 }
 
-const docLink = {
-  text: "TypeScript Documentation",
-  url: "https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/",
-  color: "#8954A8",
+const textOnImage: React.CSSProperties = {
+  backgroundImage: `url(${tex})`,
+  height: '240px',
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  padding: "48px 5%"
 }
 
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative" as "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
+const skillList = {
+  markup: [
+    {
+      name: "HTML",
+      level: "★★★★☆"
+    },
+    {
+      name: "CSS",
+      level: "★★★★☆"
+    }
+  ],
+  front: [
+    {
+      name: "javascript",
+      level: "★★★★☆"
+    },
+    {
+      name: "typescript",
+      level: "★★★★☆"
+    },
+    {
+      name: "Vue",
+      level: "★★☆☆☆"
+    },
+    {
+      name: "React",
+      level: "★★★☆☆"
+    }
+  ],
+  back: [
+    {
+      name: "java",
+      level: "★★★★★"
+    },
+    {
+      name: "[java]Spring Boot",
+      level: "★★★☆☆"
+    },
+    {
+      name: "[java]JavaFX",
+      level: "★★★☆☆"
+    },
+    {
+      name: "python",
+      level: "★★☆☆☆"
+    }
+  ],
+  other: [
+    {
+      name: "PostgreSQL",
+      level: "★★★☆☆"
+    },
+    {
+      name: "firebase",
+      level: "★★★☆☆"
+    },
+    {
+      name: "git",
+      level: "★★★☆☆"
+    }
+  ],
+  licence: [
+    {
+      name: "基本情報技術者試験"
+    },
+    {
+      name: "Oracle Java Silver"
+    },
+    {
+      name: "サーティファイ Java 2級"
+    }
+  ]
 }
-
-// data
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
-  },
-  {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
-    description:
-      "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
-  },
-  {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
-    description:
-      "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
-  },
-  {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
-    description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    badge: true,
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
-  },
-]
 
 // markup
 const IndexPage = () => {
   return (
-    <main style={pageStyles}>
-      <title>Home Page</title>
-      <h1 style={headingStyles}>
-        Congratulations
-        <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! </span>
-        🎉🎉🎉
-      </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
-        update in real-time. 😎
-      </p>
-      <ul style={listStyles}>
-        <li style={docLinkStyle}>
-          <a
-            style={linkStyle}
-            href={`${docLink.url}?utm_source=starter&utm_medium=ts-docs&utm_campaign=minimal-starter-ts`}
-          >
-            {docLink.text}
-          </a>
-        </li>
-        {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter-ts`}
-              >
-                {link.text}
-              </a>
-              {link.badge && (
-                <span style={badgeStyle} aria-label="New Badge">
-                  NEW!
-                </span>
-              )}
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <img
-        alt="Gatsby G Logo"
-        src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
-      />
-    </main>
+    <ThemeProvider
+  breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+>
+      <body>      
+        <Header />
+        <main style={pageStyles}>
+          <title>Portfolio</title>
+
+          <div style={textOnImage} className="text-white" >
+            <h1 style={changeFont}>
+              Welcome to my portfolio.
+            </h1>
+            <p>
+              プログラミングや3Dモデリングなど、したいことをしたいようにしています。
+            </p>
+          </div>
+          <br />
+          <div className="justify-content-md-center  text-center">
+          <h1 style={changeFont}><FaUser size={32}/> Profile</h1>
+          </div><br />
+          <div style={paddingPosition}>
+            <p>
+              プログラマーになりたくて、高校卒業後に情報処理系の専門学校に入学しました。
+              <br />
+              その中で基本情報技術者試験を取得し、主にjavaのスキルを培ってきました。
+            </p>
+            <p>
+              地域で就業したいため電工系の職業に就きましたが、もっとプログラムに集中したいと思い転職を決意。
+            </p>
+            <p>
+              現在は新しい技術を習得しながら転職活動を行っています。
+            </p>
+          </div>
+          <div className="justify-content-md-center  text-center">
+            <h1 style={changeFont}><CgListTree size={32} /> Skills</h1>
+          </div><br />
+
+          <CardGroup className="row" style={paddingPosition}>
+          <Card className="border border-black col">
+            <Card.Title className="justify-content-md-center  text-center">
+                <br />
+                <h1><b><AiOutlineDesktop size={32} /> マークアップ言語</b></h1>
+            </Card.Title>
+            <Card.Text className="mx-auto text-center">
+              <p>高校時代から触れていました。bootstrapも扱えます。</p>     
+            </Card.Text>
+            <Card.Body>
+            <Table borderless={true} responsive={true}>
+              <thead className="justify-content-md-center text-center">
+                <th>技術</th>
+                <th>スキル</th>
+              </thead>
+              <tbody>
+                {skillList.markup.map((skill) => 
+                  <tr key={skill.name}  className="justify-content-md-center text-center">
+                    <td>
+                      {skill.name}
+                    </td>
+                    <td className="text-secondary">
+                      {skill.level}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+            </Card.Body>
+          </Card>          
+          </CardGroup>
+          <CardGroup className="row row-cols-1 row-cols-sm-2 g-3" style={paddingPosition}>
+          <Col>
+          <Card className="border border-black col">
+            <Card.Title className="justify-content-md-center  text-center">
+                <br />
+                <h1><b><AiOutlineDesktop size={32} /> フロントエンド</b></h1>
+            </Card.Title>
+            <Card.Text className="mx-auto text-center">
+              <p>Reactやtypescriptは最近習得しました。</p>     
+            </Card.Text>
+            <Card.Body>
+            <Table borderless={true} responsive={true}>
+              <thead className="justify-content-md-center text-center">
+                <th>技術</th>
+                <th>スキル</th>
+              </thead>
+              <tbody>
+                {skillList.front.map((skill) => 
+                  <tr key={skill.name}  className="justify-content-md-center text-center">
+                    <td>
+                      {skill.name}
+                    </td>
+                    <td className="text-secondary">
+                      {skill.level}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+            </Card.Body>
+          </Card>
+          </Col>
+          <Col>
+          <Card className="border border-black col">
+            <Card.Title className="justify-content-md-center  text-center">
+              <br />
+              <h1><b><AiOutlineDesktop size={32} /> バックエンド</b></h1>
+            </Card.Title>
+            <Card.Text className="mx-auto text-center">
+              自分のスキルの中で最も習得しているのはjavaです。
+            </Card.Text>
+            <Card.Body>
+            <Table borderless={true} responsive={true}>
+              <thead className="justify-content-md-center text-center">
+                <th>技術</th>
+                <th>スキル</th>
+              </thead>
+              <tbody>
+                {skillList.back.map((skill) => 
+                  <tr key={skill.name}  className="justify-content-md-center text-center">
+                    <td>
+                      {skill.name}
+                    </td>
+                    <td className="text-secondary">
+                      {skill.level}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+            <Card.Text><p className="text-muted text-end">[]でその言語のフレームワークを示します。</p></Card.Text>
+            </Card.Body>
+          </Card>
+          </Col>
+          <Col>
+          <Card className="border border-black col">
+            <Card.Title className="justify-content-md-center  text-center">
+              <br />
+              <h1><b><AiOutlineDesktop size={32} /> その他</b></h1>
+            </Card.Title>
+            <Card.Text className="mx-auto text-center">
+              開発に使ったデータベースやツールです。
+            </Card.Text>
+            <Card.Body>
+            <Table borderless={true} responsive={true}>
+              <thead className="justify-content-md-center text-center">
+                <th>技術</th>
+                <th>スキル</th>
+              </thead>
+              <tbody>
+                {skillList.other.map((skill) => 
+                  <tr key={skill.name}  className="justify-content-md-center text-center">
+                    <td>
+                      {skill.name}
+                    </td>
+                    <td className="text-secondary">
+                      {skill.level}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+            </Card.Body>
+          </Card>
+          </Col>
+          <Col>
+          <Card className="border border-black col">
+            <Card.Title className="justify-content-md-center  text-center">
+              <br />
+              <h1><b><BsPencilSquare size={32} /> 取得資格</b></h1>
+            </Card.Title>
+            <Card.Text className="mx-auto text-center">
+              専門学生時代に取得しました。
+            </Card.Text>
+            <Card.Body>
+            <Table borderless={true} responsive={true}>
+              <thead className="justify-content-md-center text-center">
+                <th>名前</th>
+              </thead>
+              <tbody>
+                {skillList.licence.map((skill) => 
+                  <tr key={skill.name}  className="justify-content-md-center text-center">
+                    <td>
+                      {skill.name}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+            </Card.Body>
+          </Card>
+          </Col>
+          </CardGroup>      
+
+          <div className="justify-content-md-center  text-center">
+            <h1 style={changeFont}><BsNewspaper size={32}/> Works</h1>
+          </div><br />
+
+          <Carousel className="m-auto w-75">
+            <Carousel.Item className="bg-dark">
+              <img
+                className="d-block w-100 opacity-50"
+                src={work1}
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>Nice Positive!</h3>
+                <p>Spring Bootを使用して作成しました。<br />
+                  ネガティブな言葉をポジティブに変えて投稿してくれるSNSサービスです。
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="holder.js/800x400?text=Second slide&bg=282c34"
+                alt="Second slide"
+              />
+
+              <Carousel.Caption>
+                <h3>borderless-counter</h3>
+                <p>Reactを使用して作成しました。<br />
+                  
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </main>
+      </body>
+    </ThemeProvider>
   )
 }
 
